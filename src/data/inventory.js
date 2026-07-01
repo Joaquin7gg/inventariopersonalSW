@@ -750,14 +750,14 @@ export const inventory = [
   },
   {
     id: 61,
-    name: "Soldado Imperial Casco",
+    name: "Stormtrooper",
     saga: "ANH",
     line: "Lego",
     category: "figure",
     type: "Lego",
     purchaseDate: "12-2025",
     datePrecision: "month",
-    image: "/images/figures/placeholder.jpg",
+    image: "/images/figures/anhlego.jpg",
     description: "La figura del casco imperial imponía orden y temor por toda la galaxia."
   },
   {

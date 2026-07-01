@@ -209,4 +209,14 @@ export const books = [
   status: "En colección",
   image: "/images/books/originales.jpg",
 },
+{
+  id: 22,
+  title: "Star Wars: Maestro del Mal",
+  author: "Adam Christopher",
+  releaseYear: 2025,
+  publisher: "Planeta Cómic",
+  category: "Novela",
+  status: "En colección",
+  image: "/images/books/maestromal.jpg",
+},
 ];

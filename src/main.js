@@ -1,6 +1,7 @@
 import { inventory } from "./data/inventory.js";
 import { books } from "./data/books.js";
 import { comics } from "./data/comics.js";
+import { games } from "./data/games.js";
 import "./style.css";
 
 const app = document.querySelector("#app");
@@ -111,6 +112,14 @@ const sections = [
     image: "/images/sections/comics.jpg",
     imagePosition: "50% 10%",
   },
+  {
+    id: "games",
+    title: "Videojuegos",
+    shortTitle: "Videojuegos",
+    description: "Videojuegos de Star Wars que he jugado, con año y plataforma.",
+    image: "/images/games/battlefront2004.jpg",
+    imagePosition: "50% 20%",
+  },
 
 ];
 
@@ -144,6 +153,10 @@ function getItemsBySection(sectionId) {
     return comics;
   }
 
+  if (sectionId === "games") {
+    return games;
+  }
+
   return inventory
     .filter((item) => getItemSection(item) === sectionId)
     .sort((a, b) => {
@@ -160,6 +173,7 @@ function renderStats() {
 
   const totalBooks = books.length;
   const totalComics = comics.length;
+  const totalGames = games.length;
 
   return `
     <section class="stats">
@@ -186,6 +200,11 @@ function renderStats() {
       <article class="stat-card">
         <span>Cómics</span>
         <strong>${totalComics}</strong>
+      </article>
+
+      <article class="stat-card">
+        <span>Videojuegos</span>
+        <strong>${totalGames}</strong>
       </article>
     </section>
   `;
@@ -391,6 +410,42 @@ function renderComicsList(items) {
   `;
 }
 
+function renderGamesList(items) {
+  const sortedGames = [...items].sort((a, b) => {
+    return (a.releaseYear || 9999) - (b.releaseYear || 9999);
+  });
+
+  return `
+    <div class="books-list">
+      ${sortedGames
+        .map(
+          (game) => `
+            <article class="book-row">
+              <img
+                class="book-cover"
+                src="${game.image || "/images/figures/placeholder.jpg"}"
+                alt="${game.title}"
+              />
+
+              <div class="book-info">
+                <p class="tag">${game.category || "Videojuego"}</p>
+                <h3>${game.title}</h3>
+                <p>${game.developer || "Desarrollador desconocido"}</p>
+                <small>Jugado en: ${game.platform || "Sin plataforma"}</small>
+              </div>
+
+              <div class="book-meta">
+                <span>Año de lanzamiento</span>
+                <strong>${game.releaseYear || "Próximamente"}</strong>
+              </div>
+            </article>
+          `
+        )
+        .join("")}
+    </div>
+  `;
+}
+
 function openItemModal(item) {
   const existingModal = document.querySelector(".modal-overlay");
 
@@ -475,7 +530,9 @@ function renderSection(sectionId) {
               ? renderBooksList(items)
               : sectionId === "comics"
                 ? renderComicsList(items)
-                : `
+                : sectionId === "games"
+                  ? renderGamesList(items)
+                  : `
                   <div class="grid">
                     ${items
                       .map(
